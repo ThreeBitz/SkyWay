@@ -6,71 +6,75 @@ import AuthDialogs from "../../authModal";
 import firebase from "firebase";
 import { storage, db } from "../../firebase";
 import { UserContext } from '../../contexts/user';
+import makeid from "../../function";
 
-function Body({user}) {
+function Body() {
+  const [user, setUser] = useContext(UserContext).user;
     const [caption, setCaption] = useState("");
     const [image, setImage] = useState(null);
-    const [progress, setProgress] = useState(0);
-  
-    const handleChange = (e) => {
-      if (e.target.files[0]) {
-        setImage(e.target.files[0]);
-        var src1 = URL.createObjectURL(e.target.files[0]);
-        var preview1 = document.getElementById("image-1-preview");
-        preview1.src = src1;
-        preview1.style.display = "block";
-      }
-    };
-  
-    const handleUpload = () => {
-      if (image) {
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
-  
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            // progress function .....
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setProgress(progress);
-          },
-          (error) => {
-            // Error function...
-            console.log(error);
-            alert(error.message);
-          },
-          () => {
-            // upload complete function
-            storage
-              .ref("images")
-              .child(image.name)
-              .getDownloadURL()
-              .then((url) => {
-                db.collection("posts").add({
-                  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                  caption: caption,
-                  postImageUrl: url,
-                  userName: user.displayName.toLowerCase(),
-                  userProfileUrl:
-                    "https://avatars0.githubusercontent.com/u/55942632?s=460&u=f702a3d87d1f9c125f1ead9b3bec93d26cd3b3a0&v=4",
-                });
-              });
-  
-            setProgress(0);
-            setCaption("");
-            setImage(null);
-            var preview1 = document.getElementById("image-1-preview");
-            preview1.style.display = "none";
-          }
-        );
-      }
-    };
-  
-    const removeImage = () => {
+  const [progress, setProgress] = useState(0);
+
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+      var src1 = URL.createObjectURL(e.target.files[0]);
       var preview1 = document.getElementById("image-1-preview");
-      preview1.style.display = "none";
-    };
+      preview1.src = src1;
+      preview1.style.display = "block";
+    }
+  };
+  const handleUpload = () => {
+    if (image) {
+        var imageName = makeid(10)
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function .....
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          // Error function...
+          console.log(error);
+          alert(error.message);
+        },
+        () => {
+          // upload complete function
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              db.collection("posts").add({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                caption: caption,
+                postImageUrl: url,
+                userName:  user.displayName.toLowerCase(),
+                userProfileUrl:
+                  "https://avatars0.githubusercontent.com/u/55942632?s=460&u=f702a3d87d1f9c125f1ead9b3bec93d26cd3b3a0&v=4",
+              });
+            });
+
+          setProgress(0);
+          setCaption("");
+          setImage(null);
+          var preview1 = document.getElementById("image-1-preview");
+          preview1.style.display = "none";
+        }
+      );
+    }
+  };
+
+  const removeImage = () => {
+    var preview1 = document.getElementById("image-1-preview");
+    preview1.style.display = "none";
+  };
+    
+    // const cardBackground = require("../../../Assests/cardBackground.jpg").default
     return (
         <div className="body1">
              {user ? (
@@ -125,7 +129,7 @@ function Body({user}) {
                 fontWeight: caption ? "600" : "500",
               }}
             >
-              Upload
+              {`Upload ${progress != 0 ? progress:""}`}
             </button>
           </div>
         </div>

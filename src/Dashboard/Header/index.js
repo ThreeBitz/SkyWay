@@ -36,7 +36,7 @@ function Header() {
           {/* <Nav.Link><Button variant="p-3 mb-2 bg-light text-dark" onClick={logout}>Logout</Button></Nav.Link> */}
           <Nav.Link>
             {user ? <img src={user.photoURL} height="35px" border-radius="8px" /> : <Button variant="p-3 mb-2 bg-light text-dark" onClick={signInBtnClick}>Signin with google</Button>}
-            {/* <Button variant="p-3 mb-2 bg-light text-dark" onClick={signInBtnClick}>Signin with google</Button> */}
+            <Button variant="p-3 mb-2 bg-light text-dark" onClick={signInBtnClick}>Signin with google</Button>
           </Nav.Link>
         </Nav>
       </Container>

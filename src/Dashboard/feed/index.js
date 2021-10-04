@@ -20,9 +20,9 @@ export default function Feed() {
                 <Post
                 key={id}
                 id={id}
-                profileUrl={post.profileUrl}
-                username={post.username}
-                photoURL={post.photoUrl}
+                userProfileUrl={post.userProfileUrl}
+                userName={post.userName}
+                postImageUrl={post.postImageUrl}
                 caption={post.caption}
                 comments={post.comments}
                 />

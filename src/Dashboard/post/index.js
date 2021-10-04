@@ -32,19 +32,18 @@ export default function Post ({id, userName, username, postImageUrl, caption, co
             alt={userName}
             style={{ height: "25px", width: "25px" }}
           >
-            {userName ? userName.charAt(0) : "" }
+            {userProfileUrl ?  <img className = "post__avatar" src = {userProfileUrl} alt="" />:userName.charAt(0) }
           </Avatar>
           <div className="post__headerInfo">
-            <p style={{ fontSize: "14px" }}>{userName}</p>
+            <p style={{ fontSize: "14px" }}><strong>{userName}</strong></p>
           </div>
         </div>
 
         {user ? (
-          user.displayName === userName ? (
+          user.displayName.toLowerCase() === userName ? ( 
             <button
               className="button"
-              aria-controls="simple-menu"
-              aria-haspopup="true"
+
               onClick={deletePost}
             >
               Delete
@@ -54,11 +53,11 @@ export default function Post ({id, userName, username, postImageUrl, caption, co
           )
         ) : (
           <></>
-        )}
+        )} 
       </div>
       <div className="post__bottom">    
         <p>
-          <strong>{userName}</strong> {caption}
+          {caption}
         </p> 
         <img className="post__image" src={postImageUrl} />
       </div>

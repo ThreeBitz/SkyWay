@@ -1,14 +1,15 @@
-import React, { useState , useContext} from "react";
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../../contexts/user'
 import './Body.css'
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AuthDialogs from "../../authModal";
 import firebase from "firebase";
 import { storage, db } from "../../firebase";
-import { UserContext } from '../../contexts/user';
 import makeid from "../../function";
 
-function Body() {
+export default function Body () {
+
   const [user, setUser] = useContext(UserContext).user;
     const [caption, setCaption] = useState("");
     const [image, setImage] = useState(null);
@@ -129,7 +130,7 @@ function Body() {
                 fontWeight: caption ? "600" : "500",
               }}
             >
-              {`Upload ${progress != 0 ? progress:""}`}
+              {`Upload ${progress !== 0 ? progress:""}`}
             </button>
           </div>
         </div>
@@ -150,5 +151,3 @@ function Body() {
     </div>
   );
 }
-
-export default Body

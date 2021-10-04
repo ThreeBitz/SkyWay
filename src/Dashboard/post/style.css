@@ -1,0 +1,54 @@
+.post{
+    background-color: white;
+    max-width: 600px;
+    width: 90vw;
+    padding: 16px;
+}
+
+.post__headerLeft{
+    display: flex;
+    align-items: center;
+}
+
+.post__profilePic{
+    height: 35px;
+    border-radius: 8px;
+}
+
+.post__delete{
+    border:none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.post__delete :focus{
+    outline: none;
+}
+
+.post__Url{
+    width: 100%;
+    object-fit: cover;
+    margin: 16px 0px;
+}
+  
+  .post__image {
+    width: 100%;
+    height: 50vw;
+    object-fit: contain;
+    border-top: 0.5px solid #eff2f2;
+    border-bottom: 0.5px solid #eff2f2;
+  }
+  
+  .post__header {
+    display: flex;
+    padding: 12px;
+    justify-content: space-between;
+  }
+  
+  .post__headerInfo {
+    margin-left: 10px;
+  }
+  
+  .post__bottom {
+    padding: 6px 12px;
+  }
